@@ -89,11 +89,15 @@ tenant_alloc(struct tenant_config *config)
 	/* Move name */
 	tenant->tag  = EPOLL_TAG_TENANT_SERVER_SOCKET;
 	tenant->name = config->name;
+	tenant->head_module = NULL;
+	tenant->tail_module = NULL;
+
 	config->name = NULL;
 
 	tcp_server_init(&tenant->tcp_server, config->port);
 	http_router_init(&tenant->router, config->routes_len);
 	module_database_init(&tenant->module_db);
+
 	map_init(&tenant->scratch_storage);
 
 	/* Deferrable Server init */
@@ -106,7 +110,17 @@ tenant_alloc(struct tenant_config *config)
 			module = module_alloc(config->routes[i].path, APP_MODULE);
 			if (module != NULL) {
 				module_database_add(&tenant->module_db, module);
+				char    *path=config->routes[i].path;
 				config->routes[i].path = NULL;
+				module->next_module=NULL;
+				if(tenant->tail_module!=NULL){
+					tenant->tail_module->next_module=module;
+				}
+				else{
+					tenant->head_module=module;
+				}
+				tenant->tail_module=module;
+				printf("module[%d] 已构建, path: %s\n", i, path);
 			}
 		} else {
 			free(config->routes[i].path);

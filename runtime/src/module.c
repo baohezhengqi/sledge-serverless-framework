@@ -28,6 +28,11 @@
  * @param path passes ownership of string to the allocated module if successful
  * @returns 0 on success, -1 on error
  */
+//chain-fun_c_tailpoint
+struct module* tail_module=NULL;
+struct module* head_module=NULL;
+static int i = 0;  
+
 static inline int
 module_init(struct module *module, char *path)
 {
@@ -53,6 +58,9 @@ module_init(struct module *module, char *path)
 
 	module_alloc_table(module);
 	module_initialize_pools(module);
+	
+	printf("[SLEDGE] Module created: %s\n", path);
+	
 done:
 	return rc;
 err:

@@ -157,7 +157,9 @@
 		"sledge_abi_symbols.h": "c",
 		"mutex": "c",
 		"lock.h": "c",
-		"route_latency.h": "c"
+		"route_latency.h": "c",
+		"json_parse.h": "c",
+		"ctype.h": "c"
 	},
 	"files.exclude": {
 		"**/.git": true,

@@ -1,5 +1,8 @@
 # using ubuntu 20 docker image
+
 FROM ubuntu:focal
+ENV http_proxy=http://10.17.32.65:7897
+ENV https_proxy=http://10.17.32.65:7897
 
 ENV LLVM_VERSION=13
 ENV WASI_SDK_VERSION=12
@@ -108,7 +111,10 @@ RUN cd sledge && ./fix_root.sh
 
 # Rust
 # Rustup does not cleanly support system installs, so install as non-root user
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain stable --component rustfmt --target wasm32-wasi -y
+
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain stable --component rustfmt --target wasm32-wasip1 -y
+
 ENV PATH=/home/dev/.cargo/bin:$PATH
 RUN cargo install --debug cargo-audit cargo-watch rsign2
 

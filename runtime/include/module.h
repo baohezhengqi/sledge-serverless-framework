@@ -34,6 +34,8 @@ struct module {
 	struct sledge_abi__wasm_table *indirect_table;
 
 	struct module_pool *pools;
+	//chain_module
+	struct module* next_module;
 } CACHE_PAD_ALIGNED;
 
 

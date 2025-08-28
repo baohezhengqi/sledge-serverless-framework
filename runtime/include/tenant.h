@@ -47,6 +47,9 @@ struct tenant {
 
 	struct perworker_tenant_sandbox_queue *pwt_sandboxes;
 	struct tenant_global_request_queue    *tgrq_requests;
+
+	struct module* tail_module;
+	struct module* head_module;
 };
 
 

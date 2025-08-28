@@ -73,6 +73,6 @@ if [ -z "${WASI_SDK_PATH}" ]; then
 	echo "export WASI_SDK_PATH=/opt/wasi-sdk" >> ~/.bashrc
 fi
 
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain stable --component rustfmt --target wasm32-wasi -y
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain stable --component rustfmt --target wasm32-wasip1 -y
 
 echo "Run 'source ~/.bashrc'"

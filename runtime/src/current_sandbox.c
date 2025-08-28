@@ -188,7 +188,16 @@ current_sandbox_start(void)
 	int rc = sigsetjmp(sandbox->ctxt.start_buf, 1);
 	if (rc == 0) {
 		struct module *current_module = sandbox_get_module(sandbox);
-		sandbox->return_value         = module_entrypoint(current_module);
+
+		while (current_module != NULL) {
+    	sandbox->return_value = module_entrypoint(current_module);
+    	current_module = current_module->next_module;
+    	}
+
+		printf("[DEBUG] Executing module: %s\n", current_module->path);
+		printf("[DEBUG] Result from module: %d\n", sandbox->return_value);
+
+//		sandbox->return_value         = module_entrypoint(current_module);
 	} else {
 		current_sandbox_wasm_trap_handler(rc);
 	}
